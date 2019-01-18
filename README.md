@@ -4,6 +4,11 @@ QnA Makerのテスト＆結果ログ出力ツール
 - QnA MakerからExportしたKBファイルをそのままインプットファイルにしてテストが実行できます
 - 結果ファイルはScore順にトップ３の回答とScoreがCSV形式で出力されます。
 
+## 環境情報
+- C#
+- Visual Studio 2017
+- .Net Framework (.Net Coreではない）
+
 ## 使い方
 
 ①Visual Studioでソリューションファイル「QAMakerRunner.sln」を開く
