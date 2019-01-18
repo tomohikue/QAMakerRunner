@@ -26,7 +26,7 @@ namespace QAMakerRunner
                 string OutFilePath = ConfigurationManager.AppSettings["OutFilePath"];
 
                 List<string> outdata = new List<string>();
-                outdata.Add("InputWord,CorrectWord,PredictionWord1,Score1,PredictionWord2,Score2,PredictionWord3,Score3");
+                outdata.Add("InputWord\tCorrectWord\tPredictionWord1\tScore1\tPredictionWord2\tScore2\tPredictionWord3\tScore3\tPredictionWord4\tScore4\tPredictionWord5\tScore5");
 
                 List<InputData> InputData = new List<InputData>();
 
@@ -76,7 +76,7 @@ namespace QAMakerRunner
 
                     //POST送信する文字列を作成
                     string postData =
-                        "{\"question\":\"" + i.Question + "\",\"top\": 3}";
+                        "{\"question\":\"" + i.Question + "\",\"top\": 5}";
                     //HttpUtility.UrlEncode(i.Question, enc) + "\"}";
 
                     WebClient wc = new WebClient();
@@ -95,10 +95,10 @@ namespace QAMakerRunner
                     var recommendations = jsonSerialier.ReadObject(memoryStream);
                     res = (ResponseModel)recommendations;
 
-                    string row = i.Question + "," + i.Answer;
+                    string row = i.Question + "\t" + i.Answer;
                     foreach (var j in res.answers)
                     {
-                        row = row + "," + j.answer + "," + j.score;
+                        row = row + "\t" + j.answer.Replace("\n","\\n") + "\t" + j.score;
                     };
 
                     outdata.Add(row);
@@ -151,7 +151,12 @@ namespace QAMakerRunner
         public float score { get; set; }
         public int id { get; set; }
         public string source { get; set; }
-        public string[] metadata { get; set; }
+        public metadata[] metadata { get; set; }
+    }
+    public class metadata
+    {
+        public string name { get; set; }
+        public string value { get; set; }
     }
 
 }
