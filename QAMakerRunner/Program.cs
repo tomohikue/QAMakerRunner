@@ -35,6 +35,7 @@ namespace QAMakerRunner
                 {
                     textFieldParser.TextFieldType = Microsoft.VisualBasic.FileIO.FieldType.Delimited;
                     textFieldParser.SetDelimiters("\t");
+                    textFieldParser.HasFieldsEnclosedInQuotes = false;
 
                     Dictionary<string, int> headerDictionary = new Dictionary<string, int>();
                     Dictionary<string, int> Word2IndexDictionary = new Dictionary<string, int>();
@@ -50,7 +51,7 @@ namespace QAMakerRunner
                         string[] csvRow = textFieldParser.ReadFields();
                         InputData.Add(new InputData
                         {
-                            Question = csvRow[0],
+                            Question = csvRow[0].ToString().Replace("\"",""),
                             Answer = csvRow[1],
                             Source = csvRow[2],
                             Metadata = csvRow[3]
@@ -77,7 +78,6 @@ namespace QAMakerRunner
                     //POST送信する文字列を作成
                     string postData =
                         "{\"question\":\"" + i.Question + "\",\"top\": 5}";
-                    //HttpUtility.UrlEncode(i.Question, enc) + "\"}";
 
                     WebClient wc = new WebClient();
                     //文字コードを指定する
